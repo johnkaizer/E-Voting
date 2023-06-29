@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">E-Voting</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="voter_education">
+        1. Election Process:\n
+        Overview: Welcome to the e-voting system powered by facial recognition technology. This system ensures secure and efficient voting for eligible citizens.
+        Registration: In order to participate in the elections, you must first register as a voter using the app. Only registered voters will be allowed to cast their votes.\n\n
+        2. Voter Registration:\n
+        How to Register: To register as a voter, go to the "Registration" section in the app and provide your personal information, including name, address, and identification details.
+        Facial Recognition Enrollment: As part of the registration process, you will be prompted to enroll your facial features securely into the system. This will be used for authentication during the voting process.\n\n
+        3. Facial Recognition for Voting:\n
+        Secure Authentication: When it is time to vote, the app will use facial recognition technology to verify your identity securely. Simply position your face within the designated frame, and the system will authenticate you based on your enrolled facial features.
+        Real-Time Verification: The facial recognition system compares your facial features with the registered data to ensure accurate authentication. This process takes place in real time, providing a seamless and efficient voting experience.\n\n
+        4. Casting Your Vote:\n
+        Casting Your Ballot: After successful authentication, you will gain access to the ballot screen. Here, you can select your preferred candidates or cast your vote on important issues.
+        Review and Confirmation: Before finalizing your vote, the app will provide a summary of your selections. Take a moment to review your choices carefully, and when you are ready, confirm your vote.\n\n
+        5. Security and Privacy:\n
+        Data Protection: The facial recognition system in our app adheres to strict security and privacy standards. Your facial data is securely stored and encrypted, ensuring its confidentiality and protection.
+        Privacy Assurance: We prioritize the privacy of your personal information. The facial recognition technology only utilizes the necessary data for authentication purposes and does not store any additional sensitive information.
+    </string>
+    <string name="faqs">
+        1. Q: How do I register to vote?\n
+        A: To register to vote, visit our app and click on the Register button. Follow the instructions and provide the required information.\n\n
+        2. Q: Can I vote if I am not registered?\n
+        A: No, only registered voters are eligible to vote in the online voting system. Make sure to complete the registration process before the voting period.\n\n
+        3. Q: What documents do I need for voter registration?\n
+        You will need a valid identification document, such as a passport or driver license, to verify your identity during the registration process.\n\n
+        4. Q: Can I change my vote after submitting it?\n
+        A: No, once you have submitted your vote, it is final and cannot be changed. Take your time to review your choices before confirming your vote.\n\n
+        5. Q: How can I ensure the confidentiality and security of my vote?\n
+        A: Our online voting system utilizes advanced encryption and security measures to protect the confidentiality and integrity of your vote. Rest assured that your vote will remain anonymous.\n\n
+        6. Q: Can I vote from multiple devices?\n
+        A: No, each voter is allowed to cast only one vote. Voting from multiple devices or attempting to vote multiple times will result in disqualification.\n\n
+        7. Q: What happens if there is a tie in the voting results?\n
+        A: In the event of a tie, specific procedures are in place to resolve the tie, such as conducting a run-off vote or referring to predetermined tie-breaking rules.\n\n
+        8. Q: Can I view the voting results before the voting period ends?\n
+        A: No, the voting results will only be disclosed after the voting period has concluded to maintain the integrity and fairness of the voting process.
+    </string>
+    <string name="about">
+        The eVoting App is a cutting-edge digital platform designed to revolutionize the way we participate in elections. It provides a secure, convenient, and transparent voting experience for citizens, ensuring the integrity of the democratic process.\n\n
+        With the eVoting App, voters can exercise their right to vote from the comfort of their own devices, eliminating the need for physical polling stations and long queues. Our app is accessible 24/7, allowing voters to cast their votes at their convenience during the designated voting period.
+    </string>
+    <string name="odm">The ODM Party (Orange Democratic Movement) is a prominent political party in Kenya.
+It was founded in 2005 and has since become a major player in Kenyan politics.
+The party advocates for democratic principles, social justice, and inclusive governance.</string>
+    <string name="uda">The UDA Party (United Democratic Alliance) is a political party in Kenya.
+It was formed in 2021 and has gained significant attention in the country political landscape.
+The party champions the ideals of economic empowerment, national unity, and devolution of power.</string>
+    <string name="jubilee">Jubilee Party Kenya is a prominent political party in Kenya.
+It was formed in 2016 as a merger between several political parties.</string>
+    <string name="wiper">Wiper Democratic Movement-Kenya, commonly known as Wiper Party, is a political party in Kenya.
+It was founded in 2008 by Kalonzo Musyoka, a prominent Kenyan politician.
+Wiper Party is known for its support base in the Eastern region of Kenya and has been a key player in national politics.</string>
+    <string name="anc">Amani National Congress (ANC) is a political party in Kenya, established in 2015 by Musalia Mudavadi.
+ANC advocates for inclusive governance, social justice, and economic development.</string>
+    <string name="roots">RPK focuses on championing grassroots democracy, social justice, and inclusive development.
+The party seeks to address the needs and aspirations of ordinary Kenyans through its policies and programs.</string>
+    <string name="kanu">KANU (Kenya African National Union) is one of the oldest political parties in Kenya, founded in 1960.
+KANU played a significant role in Kenya struggle for independence and has been a dominant political force in the country history.
+The party promotes nationalism, unity, and the economic development of Kenya.</string>
+</resources>

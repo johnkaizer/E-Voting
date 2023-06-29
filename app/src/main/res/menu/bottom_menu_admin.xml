@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/home"
+        android:title="Home"
+        android:icon="@drawable/home_24"/>
+
+    <item
+        android:id="@+id/voters"
+        android:title="Voters"
+        android:icon="@drawable/vote_24" />
+    <item
+        android:id="@+id/results"
+        android:title="Results"
+        android:icon="@drawable/chart_24" />
+    <item
+        android:id="@+id/create"
+        android:title="Polls "
+        android:icon="@drawable/add_task_24" />
+</menu>
