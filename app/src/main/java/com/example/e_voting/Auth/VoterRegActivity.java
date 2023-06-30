@@ -1,4 +1,4 @@
-package com.example.e_voting;
+package com.example.e_voting.Auth;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,9 +8,6 @@ import androidx.appcompat.widget.AppCompatButton;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +18,9 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.e_voting.Constants;
 import com.example.e_voting.Models.VotersModel;
+import com.example.e_voting.R;
 import com.example.e_voting.Voter.MainActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,11 +31,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 
 public class VoterRegActivity extends AppCompatActivity {
     AppCompatButton uploadImage, saveBtn;

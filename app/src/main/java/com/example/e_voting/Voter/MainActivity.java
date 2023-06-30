@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.e_voting.Admin.AdminActivity;
 import com.example.e_voting.Auth.SignInActivity;
 import com.example.e_voting.Models.User;
 import com.example.e_voting.R;
@@ -119,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         } else if (id == R.id.action_logout) {
+            editor.clear();
+            editor.commit();
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(MainActivity.this, SignInActivity.class));
             finish();

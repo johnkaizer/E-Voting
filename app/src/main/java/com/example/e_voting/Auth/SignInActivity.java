@@ -20,7 +20,6 @@ import com.example.e_voting.Admin.AdminActivity;
 import com.example.e_voting.Models.User;
 import com.example.e_voting.R;
 import com.example.e_voting.Voter.MainActivity;
-import com.example.e_voting.VoterRegActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

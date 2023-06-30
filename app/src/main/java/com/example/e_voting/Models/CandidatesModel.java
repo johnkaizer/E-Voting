@@ -5,18 +5,16 @@ public class CandidatesModel {
     String fullName;
     String party;
     String partyLogo;
-    String votes;
     String Category;
 
     public CandidatesModel() {
     }
 
-    public CandidatesModel(String image, String fullName, String party, String partyLogo, String votes, String category) {
+    public CandidatesModel(String image, String fullName, String party, String partyLogo, String category) {
         this.image = image;
         this.fullName = fullName;
         this.party = party;
         this.partyLogo = partyLogo;
-        this.votes = votes;
         Category = category;
     }
 
@@ -50,14 +48,6 @@ public class CandidatesModel {
 
     public void setPartyLogo(String partyLogo) {
         this.partyLogo = partyLogo;
-    }
-
-    public String getVotes() {
-        return votes;
-    }
-
-    public void setVotes(String votes) {
-        this.votes = votes;
     }
 
     public String getCategory() {
