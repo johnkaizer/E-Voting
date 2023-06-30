@@ -58,5 +58,11 @@ ANC advocates for inclusive governance, social justice, and economic development
 The party seeks to address the needs and aspirations of ordinary Kenyans through its policies and programs.</string>
     <string name="kanu">KANU (Kenya African National Union) is one of the oldest political parties in Kenya, founded in 1960.
 KANU played a significant role in Kenya struggle for independence and has been a dominant political force in the country history.
-The party promotes nationalism, unity, and the economic development of Kenya.</string>
+The party promotes nationalism, unity, and the economic development of Kenya.
+    </string>
+    <string-array name="gender">
+        <item>MALE</item>
+        <item>FEMALE</item>
+        <item>Wont Say</item>
+    </string-array>
 </resources>

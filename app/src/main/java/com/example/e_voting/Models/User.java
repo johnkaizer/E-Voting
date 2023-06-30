@@ -1,18 +1,19 @@
 package com.example.e_voting.Models;
 
 public class User {
-    public String fullName, email, phone, password;
+    public String fullName, email, phone, password,role;
     public boolean additionalInfoRegistered; // Flag indicating if additional information is registered
 
     public User() {
     }
 
-    public User(String fullName, String email, String phone, String password) {
+    public User(String fullName, String email, String phone, String password, String role, boolean additionalInfoRegistered) {
         this.fullName = fullName;
         this.email = email;
         this.phone = phone;
         this.password = password;
-        this.additionalInfoRegistered = false; // Initialize the flag to false
+        this.role = role;
+        this.additionalInfoRegistered = additionalInfoRegistered;
     }
 
     public String getFullName() {
@@ -45,6 +46,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public boolean isAdditionalInfoRegistered() {

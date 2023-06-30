@@ -2,19 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_account"
         android:orderInCategory="100"
-        android:title="Settings"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_about"
-        android:orderInCategory="100"
-        android:title="About App"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/map"
-        android:orderInCategory="100"
-        android:title="Church Directions"
+        android:title="Account"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_logout"
