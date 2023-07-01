@@ -1,0 +1,16 @@
+
+o
+java:S1104"TMake fullName a static final constant or non-public and provide accessors if needed.(¥—Ø¼ûÿÿÿÿ
+l
+java:S1104"QMake email a static final constant or non-public and provide accessors if needed.(¥—Ø¼ûÿÿÿÿ
+l
+java:S1104"QMake phone a static final constant or non-public and provide accessors if needed.(¥—Ø¼ûÿÿÿÿ
+o
+java:S1104"TMake password a static final constant or non-public and provide accessors if needed.(¥—Ø¼ûÿÿÿÿ
+k
+java:S1104"PMake role a static final constant or non-public and provide accessors if needed.(¥—Ø¼ûÿÿÿÿ
+z
+java:S1104"dMake additionalInfoRegistered a static final constant or non-public and provide accessors if needed.(Ê§£ó
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(İşÊ
+]
+java:S1659"BDeclare "email" and all following declarations on a separate line.(¥—Ø¼ûÿÿÿÿ

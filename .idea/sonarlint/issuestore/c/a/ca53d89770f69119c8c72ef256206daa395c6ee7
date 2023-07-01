@@ -1,0 +1,19 @@
+
+C
+java:S1604R"(Make this anonymous inner class a lambda(ü»×¬ıÿÿÿÿ
+C
+java:S16048"(Make this anonymous inner class a lambda(ïËà¤ÿÿÿÿÿ
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Î“¾¸øÿÿÿÿ
+m	java:S116#"XRename this field "EditTextEmail" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°ÙÊ…
+D
+java:S1659#".Declare "editTextPassword" on a separate line.(°ÙÊ…
+m
+java:S3776*"RRefactor this method to reduce its Cognitive Complexity from 42 to the 15 allowed.(¨Œşÿÿÿÿ
+J
+java:S1874©"3Remove this use of "NetworkInfo"; it is deprecated.(ÿ»¶Ã
+S
+java:S1874©"<Remove this use of "getActiveNetworkInfo"; it is deprecated.(ÿ»¶Ã
+O
+java:S1874ª"3Remove this use of "isConnected"; it is deprecated.(•İºŠùÿÿÿÿ
+B
+java:S1172­"+Remove this unused method parameter "view".(˜‹ºÄ

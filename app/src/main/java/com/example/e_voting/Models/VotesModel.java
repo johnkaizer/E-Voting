@@ -1,7 +1,6 @@
 package com.example.e_voting.Models;
 
 public class VotesModel {
-    int imageUrl;
     String name;
     String category;
     String party;
@@ -10,21 +9,13 @@ public class VotesModel {
     public VotesModel() {
     }
 
-    public VotesModel(int imageUrl, String name, String category, String party, String userUid) {
-        this.imageUrl = imageUrl;
+    public VotesModel( String name, String category, String party, String userUid) {
         this.name = name;
         this.category = category;
         this.party = party;
         this.userUid = userUid;
     }
 
-    public int getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(int imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 
     public String getName() {
         return name;

@@ -39,11 +39,9 @@ public class AddCandidateFragment extends Fragment {
     private FragmentAddCandidateBinding binding;
     EditText fullNameET, partyET;
     Spinner cat;
-    ImageView imageV, partyLogo;
-    AppCompatButton submitBtn, uploadImageBtn, uploadLogoBtn;
+    ImageView imageV;
+    AppCompatButton submitBtn, uploadImageBtn;
     public static final int REQUEST_CODE_IMAGE = 101;
-    public static final int REQUEST_CODE_PARTY_LOGO = 102;
-
     Uri imageUri;
     Uri partyLogoUri;
 
@@ -65,10 +63,8 @@ public class AddCandidateFragment extends Fragment {
         fullNameET = root.findViewById(R.id.fullname);
         partyET = root.findViewById(R.id.party);
         imageV = root.findViewById(R.id.candidate_image);
-        partyLogo = root.findViewById(R.id.party_logo);
         submitBtn = root.findViewById(R.id.submit_btn);
         uploadImageBtn = root.findViewById(R.id.image_btn);
-        uploadLogoBtn = root.findViewById(R.id.button2);
         cat = root.findViewById(R.id.category_spinner);
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -91,19 +87,6 @@ public class AddCandidateFragment extends Fragment {
             }
         });
 
-        uploadLogoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Set clickedImageView to partyLogo
-                clickedImageView = partyLogo;
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, REQUEST_CODE_PARTY_LOGO);
-            }
-        });
-
-
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,7 +106,6 @@ public class AddCandidateFragment extends Fragment {
                     candidate.setImage(candidateId);
                     candidate.setFullName(fullName);
                     candidate.setParty(party);
-                    candidate.setPartyLogo(candidateId);
                     candidate.setCategory(category);
 
                     // Save the candidate to Firebase Realtime Database
@@ -141,7 +123,7 @@ public class AddCandidateFragment extends Fragment {
     }
 
     private void uploadImage(String candidateId) {
-        if (imageUri != null && partyLogoUri != null) {
+        if (imageUri != null) {
             // Upload candidate image
             StorageReference candidateImageRef = storageRef.child(candidateId + "_image");
             candidateImageRef.putFile(imageUri)
@@ -149,22 +131,6 @@ public class AddCandidateFragment extends Fragment {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             // Candidate image upload success
-
-                            // Upload party logo image
-                            StorageReference partyLogoRef = storageRef.child(candidateId + "_partyLogo");
-                            partyLogoRef.putFile(partyLogoUri)
-                                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                        @Override
-                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                            // Party logo image upload success
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            // Party logo image upload failed
-                                        }
-                                    });
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -178,7 +144,13 @@ public class AddCandidateFragment extends Fragment {
 
 
     private void saveCandidate(CandidatesModel candidate) {
-        dataRef.child(candidate.getImage()).setValue(candidate)
+        String category = candidate.getCategory();
+        DatabaseReference categoryRef = dataRef.child(category);
+
+        String candidateId = categoryRef.push().getKey();
+        candidate.setImage(candidateId);
+
+        categoryRef.child(candidateId).setValue(candidate)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -193,35 +165,24 @@ public class AddCandidateFragment extends Fragment {
                 });
     }
 
+
     private void resetForm() {
         fullNameET.setText("");
         partyET.setText("");
         imageV.setImageResource(R.drawable.pic);
-        partyLogo.setImageResource(R.drawable.pic);
         isImageAdded = false;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == REQUEST_CODE_IMAGE && data != null) {
-                imageUri = data.getData();
-                isImageAdded = true;
-                // Check which ImageView was clicked
-                if (clickedImageView == imageV) {
-                    // Set the image to imageV
-                    imageV.setImageURI(imageUri);
-                } else if (clickedImageView == partyLogo) {
-                    // Set the image to partyLogo
-                    partyLogo.setImageURI(partyLogoUri);
-                }
-            } else if (requestCode == REQUEST_CODE_PARTY_LOGO && data != null) {
-                partyLogoUri = data.getData();
-                // Set the image to partyLogo ImageView
-                partyLogo.setImageURI(partyLogoUri);
-            }
+        if (requestCode == REQUEST_CODE_IMAGE && data != null) {
+            imageUri = data.getData();
+            isImageAdded = true;
+            imageV.setImageURI(imageUri);
+
         }
+
     }
 }
 

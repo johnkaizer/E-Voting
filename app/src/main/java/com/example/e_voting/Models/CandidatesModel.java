@@ -4,17 +4,15 @@ public class CandidatesModel {
     String image;
     String fullName;
     String party;
-    String partyLogo;
     String Category;
 
     public CandidatesModel() {
     }
 
-    public CandidatesModel(String image, String fullName, String party, String partyLogo, String category) {
+    public CandidatesModel(String image, String fullName, String party, String category) {
         this.image = image;
         this.fullName = fullName;
         this.party = party;
-        this.partyLogo = partyLogo;
         Category = category;
     }
 
@@ -42,13 +40,6 @@ public class CandidatesModel {
         this.party = party;
     }
 
-    public String getPartyLogo() {
-        return partyLogo;
-    }
-
-    public void setPartyLogo(String partyLogo) {
-        this.partyLogo = partyLogo;
-    }
 
     public String getCategory() {
         return Category;
