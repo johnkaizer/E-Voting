@@ -32,8 +32,8 @@
         android:layout_height="wrap_content"
         android:text="Poll Categories"
         android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/addItems"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,8 +50,8 @@
         android:layout_marginTop="8dp"
         android:text="Add Candidate"
         android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText" />
 
@@ -80,8 +80,5 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/empty" />
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -77,17 +77,31 @@ public class VotesCountFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    for (DataSnapshot voteSnapshot : dataSnapshot.getChildren()) {
-                        VotesModel votesModel = voteSnapshot.getValue(VotesModel.class);
-                        votesModels.add(votesModel);
+                    for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
+                        String categoryTitle = categorySnapshot.getKey();
+
+                        for (DataSnapshot candidateSnapshot : categorySnapshot.getChildren()) {
+                            String candidateName = candidateSnapshot.getKey();
+
+                            // Create a new VotesModel object with the category and name
+                            VotesModel votesModel = new VotesModel();
+                            votesModel.setCategory(categoryTitle);
+                            votesModel.setName(candidateName);
+
+                            // Add the VotesModel to the list
+                            votesModels.add(votesModel);
+                        }
                     }
+
+                    // Notify the adapter that the data has changed
                     votesAdapter.notifyDataSetChanged();
                 } else {
-                    // Show animation view when no votes are found
+                    // Show animation view when no categories are found
                     noVotesAnimationView.setVisibility(View.VISIBLE);
                     candidateRec.setVisibility(View.GONE);
                 }
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

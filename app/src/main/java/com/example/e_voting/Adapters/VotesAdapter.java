@@ -43,27 +43,34 @@ public class VotesAdapter extends RecyclerView.Adapter<VotesAdapter.ViewHolder> 
         holder.party.setText(votesModel.getParty());
         holder.category.setText(votesModel.getCategory());
 
-        // Retrieve the total votes for the candidate
-        DatabaseReference votesRef = FirebaseDatabase.getInstance().getReference().child("Votes");
-        DatabaseReference categoryRef = votesRef.child(votesModel.getCategory());
-        categoryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    // Count the number of votes for the candidate
-                    int totalVotes = (int) snapshot.getChildrenCount();
-                    holder.votesTxt.setText(String.valueOf(totalVotes));
-                } else {
-                    holder.votesTxt.setText("0");
-                }
-            }
+        String category = votesModel.getCategory();
+        String name = votesModel.getName();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                holder.votesTxt.setText("Error");
-            }
-        });
+        if (category != null && name != null) {
+            DatabaseReference votesRef = FirebaseDatabase.getInstance().getReference().child("Votes");
+            DatabaseReference categoryRef = votesRef.child(category).child(name);
+            categoryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        int totalVotes = (int) snapshot.getChildrenCount();
+                        holder.votesTxt.setText(String.valueOf(totalVotes));
+                    } else {
+                        holder.votesTxt.setText("0");
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    holder.votesTxt.setText("Error");
+                }
+            });
+        } else {
+            holder.votesTxt.setText("Invalid candidate data");
+        }
     }
+
+
 
     @Override
     public int getItemCount() {

@@ -1,8 +1,0 @@
-
-o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(›È¢Á
-q
-java:S1450!"VRemove the "binding" field and declare it as a local variable in the relevant methods.(æšØÇýÿÿÿÿ
-{
-java:S1450%"`Remove the "databaseReference" field and declare it as a local variable in the relevant methods.(Ï¨Î·ùÿÿÿÿ
-m
-java:S1450""WRemove the "voterRec" field and declare it as a local variable in the relevant methods.(Ë¹ƒ’

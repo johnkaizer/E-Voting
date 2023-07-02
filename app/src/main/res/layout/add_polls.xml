@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_margin="20dp"
     android:padding="20dp"
-    android:id="@+id/dialogAdd"
+    android:id="@+id/dialogAddPolls"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent">
 
@@ -25,7 +25,7 @@
             android:drawableLeft="@drawable/edit_24"
             android:drawablePadding="10dp"
             android:padding="10dp"
-            android:text="Add new Category"
+            android:text="Add new Poll"
             android:textColor="@color/white"
             android:textSize="17sp"
             android:textStyle="bold"
@@ -57,14 +57,46 @@
             app:layout_constraintTop_toBottomOf="@+id/forgotText">
 
             <EditText
-                android:id="@+id/idEdtNoteName"
+                android:id="@+id/idEdtPollName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:hint="Enter category"
+                android:hint="Enter new poll"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray" />
         </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/cardView4"
+            app:layout_constraintStart_toStartOf="@+id/cardView4"
+            app:layout_constraintTop_toBottomOf="@+id/cardView4" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView12"
+            app:layout_constraintStart_toEndOf="@+id/textView12"
+            app:layout_constraintTop_toTopOf="@+id/textView12" />
+
+        <Button
+            android:id="@+id/dateTimePickerBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Select Date and Time"
+            app:layout_constraintEnd_toEndOf="@+id/cardView4"
+            app:layout_constraintStart_toStartOf="@+id/cardView4"
+            app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
         <Button
             android:id="@+id/add"
@@ -80,7 +112,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/cardView4"
             app:layout_constraintStart_toStartOf="@+id/cardView4"
-            app:layout_constraintTop_toBottomOf="@+id/cardView4" />
+            app:layout_constraintTop_toBottomOf="@+id/dateTimePickerBtn" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

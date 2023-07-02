@@ -125,7 +125,7 @@ public class AddCandidateFragment extends Fragment {
     private void uploadImage(String candidateId) {
         if (imageUri != null) {
             // Upload candidate image
-            StorageReference candidateImageRef = storageRef.child(candidateId + "_image");
+            StorageReference candidateImageRef = storageRef.child(candidateId);
             candidateImageRef.putFile(imageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override

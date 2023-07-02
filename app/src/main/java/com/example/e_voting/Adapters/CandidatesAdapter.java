@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.e_voting.Constants;
@@ -39,6 +40,15 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Vi
         this.context = context;
         this.candidatesList = candidatesList;
     }
+    public interface OnItemLongClickListener {
+        void onItemLongClick(int position);
+    }
+
+    private OnItemLongClickListener onItemLongClickListener;
+
+    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
+        this.onItemLongClickListener = listener;
+    }
 
 
     @NonNull
@@ -55,6 +65,16 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Vi
         holder.partyName.setText(model.getParty());
         holder.category.setText(model.getCategory());
         Picasso.get().load(model.getImage()).into(holder.picture);
+        // Set long press listener for the card view
+        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (onItemLongClickListener != null) {
+                    onItemLongClickListener.onItemLongClick(holder.getAdapterPosition());
+                }
+                return true;
+            }
+        });
 
         // Set click listener for vote
         holder.voteBtn.setOnClickListener(new View.OnClickListener() {
@@ -63,24 +83,25 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Vi
                 DatabaseReference votesReference = FirebaseDatabase.getInstance().getReference().child("Votes");
 
                 String category = model.getCategory();
+                String candidateName = model.getFullName();
                 String userUid = Constants.getCurrentUserID();
 
                 // Create a reference to the category node in Votes
                 DatabaseReference categoryReference = votesReference.child(category);
 
-                // Check if the user has already voted in this category
-                categoryReference.child(userUid).addListenerForSingleValueEvent(new ValueEventListener() {
+                // Check if the user has already voted for this candidate
+                categoryReference.child(candidateName).child(userUid).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
-                            // User has already voted in this category
-                            Toast.makeText(context, "You have already voted in this category.", Toast.LENGTH_SHORT).show();
+                            // User has already voted for this candidate
+                            Toast.makeText(context, "You have already voted for this candidate.", Toast.LENGTH_SHORT).show();
                         } else {
-                            // User has not voted in this category, save the vote
-                            VotesModel vote = new VotesModel(model.getFullName(), category, model.getParty(), userUid);
+                            // User has not voted for this candidate, save the vote
+                            VotesModel vote = new VotesModel(candidateName, category, model.getParty(), userUid);
 
-                            // Add the user's vote under the category node
-                            categoryReference.child(userUid).setValue(vote)
+                            // Add the user's vote under the candidate's node
+                            categoryReference.child(candidateName).child(userUid).setValue(vote)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
@@ -106,7 +127,8 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Vi
     }
 
 
-        @Override
+
+    @Override
     public int getItemCount() {
         return candidatesList.size();
     }
@@ -117,6 +139,7 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Vi
         TextView category;
         ImageView picture;
         Button voteBtn;
+        CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -125,6 +148,7 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Vi
             category = itemView.findViewById(R.id.category);
             picture = itemView.findViewById(R.id.imageView2);
             voteBtn = itemView.findViewById(R.id.button3);
+            cardView = itemView.findViewById(R.id.cardItem);
         }
     }
 }

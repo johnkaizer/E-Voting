@@ -1,5 +1,7 @@
 package com.example.e_voting;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,8 @@ import com.example.e_voting.Models.CandidateCategory;
 import com.example.e_voting.Models.CandidatesModel;
 import com.example.e_voting.databinding.FragmentCandidatesBinding;
 import com.example.e_voting.databinding.FragmentVoteBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -62,12 +66,80 @@ public class CandidatesFragment extends Fragment {
         candidatesModels = new ArrayList<>();
         candidatesAdapter = new CandidatesAdapter(getContext(), candidatesModels);
         candidateRec.setAdapter(candidatesAdapter);
+        // Set long-press listener for item deletion
+        candidatesAdapter.setOnItemLongClickListener(new CandidatesAdapter.OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(int position) {
+                // Show a confirmation dialog
+                showConfirmationDialog(position);
+            }
+        });
 
         // Fetch candidates from Firebase Realtime Database for the selected category
         fetchCandidates();
 
         return root;
     }
+
+    private void showConfirmationDialog(final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Delete Candidate");
+        builder.setMessage("Are you sure you want to delete this candidate?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                CandidatesModel candidate = candidatesModels.get(position);
+                String candidateId = candidate.getImage();
+
+                // Get a reference to the "Candidates" node in the database
+                DatabaseReference candidatesRef = FirebaseDatabase.getInstance().getReference().child("Candidates");
+
+                // Remove the candidate from the "Candidates" node
+                candidatesRef.child(category).child(candidateId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Get a reference to the "Votes" node in the database
+                        DatabaseReference votesRef = FirebaseDatabase.getInstance().getReference().child("Votes");
+
+                        // Remove the candidate node from the category in "Votes"
+                        votesRef.child(category).child(candidateId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                // Delete the candidate from the list
+                                candidatesModels.remove(position);
+
+                                // Notify the adapter about the removal
+                                candidatesAdapter.notifyItemRemoved(position);
+
+                                Toast.makeText(getContext(), "Candidate deleted successfully.", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(), "Failed to delete candidate from Votes.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Failed to delete candidate from Candidates.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+
 
     private void fetchCandidates() {
         // Get a reference to the "Candidates" node in the database for the selected category

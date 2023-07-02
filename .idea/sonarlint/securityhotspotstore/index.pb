@@ -3,8 +3,6 @@ n
 >app/src/main/java/com/example/e_voting/Models/VotersModel.java,a\4\a4a5e505bdfa388a0180b54346457d6303e9c69d
 o
 ?app/src/main/java/com/example/e_voting/Auth/SignUpActivity.java,e\7\e7c8375db572532593570e71f6a05d0e03be24f5
-t
-Dapp/src/main/java/com/example/e_voting/Admin/CategoriesFragment.java,0\1\010072ec8a230966ab8b0fd0c98c7360c3366ec4
 q
 Aapp/src/main/java/com/example/e_voting/Auth/VoterRegActivity.java,8\3\83162047d3195a228fa87da4e9fe8ce06aabf5d8
 P
@@ -13,8 +11,6 @@ p
 @app/src/main/java/com/example/e_voting/Models/CategoryModel.java,b\6\b63f03cf6ea97e7e753ae3a9c875e6013a49e135
 t
 Dapp/src/main/java/com/example/e_voting/Adapters/CategoryAdapter.java,8\0\8092f8532dfda2e9471ee0081a9a57161f15e653
-y
-Iapp/src/main/java/com/example/e_voting/Admin/VotesManagementFragment.java,8\7\873bf4b653818800b06ea901b3770c1a120147b7
 e
 5app/src/main/java/com/example/e_voting/Constants.java,c\2\c20092c85f79c9b4323d4ac37d9d7b59e841a7eb
 o
