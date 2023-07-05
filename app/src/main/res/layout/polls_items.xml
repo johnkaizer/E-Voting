@@ -8,6 +8,7 @@
     android:orientation="vertical"
     app:cardBackgroundColor="@color/green"
     app:cardCornerRadius="8dp"
+    android:id="@+id/cardItem"
     app:cardElevation="10dp"
     app:contentPadding="6dp">
 

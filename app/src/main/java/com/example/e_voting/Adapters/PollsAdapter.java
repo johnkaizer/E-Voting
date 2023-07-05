@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.e_voting.Models.Polls;
@@ -31,6 +32,15 @@ public class PollsAdapter extends RecyclerView.Adapter<PollsAdapter.ViewHolder> 
         this.context = context;
         this.list = list;
     }
+    public interface OnItemLongClickListener {
+        void onItemLongClick(int position);
+    }
+
+    private PollsAdapter.OnItemLongClickListener onItemLongClickListener;
+
+    public void setOnItemLongClickListener(PollsAdapter.OnItemLongClickListener listener) {
+        this.onItemLongClickListener = listener;
+    }
 
     @NonNull
     @Override
@@ -45,6 +55,16 @@ public class PollsAdapter extends RecyclerView.Adapter<PollsAdapter.ViewHolder> 
         holder.titleTxt.setText(polls.getTitle());
         holder.dateTxt.setText(polls.getpDate());
         holder.timeText.setText(polls.getpTime());
+        // Set long press listener for the card view
+        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (onItemLongClickListener != null) {
+                    onItemLongClickListener.onItemLongClick(holder.getAdapterPosition());
+                }
+                return true;
+            }
+        });
 
 
     }
@@ -59,11 +79,13 @@ public class PollsAdapter extends RecyclerView.Adapter<PollsAdapter.ViewHolder> 
         TextView titleTxt;
         TextView dateTxt;
         TextView timeText;
+        CardView cardView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTxt = itemView.findViewById(R.id.textView);
             dateTxt = itemView.findViewById(R.id.dateTxt);
             timeText = itemView.findViewById(R.id.pollTime);
+            cardView = itemView.findViewById(R.id.cardItem);
         }
     }
 }

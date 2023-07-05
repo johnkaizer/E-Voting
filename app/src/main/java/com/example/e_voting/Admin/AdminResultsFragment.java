@@ -9,15 +9,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.e_voting.R;
+import com.example.e_voting.databinding.FragmentAdminResultsBinding;
+import com.example.e_voting.databinding.FragmentPollsBinding;
+import com.github.mikephil.charting.charts.BarChart;
 
 public class AdminResultsFragment extends Fragment {
-
-
-
+    private FragmentAdminResultsBinding binding;
+    BarChart barChart;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_results, container, false);
+        binding = FragmentAdminResultsBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+        barChart = root.findViewById(R.id.barchart);
+
+
+        return root;
     }
 }

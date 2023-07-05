@@ -10,10 +10,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.e_voting.Constants;
+import com.example.e_voting.FaceDetectionFragment;
 import com.example.e_voting.Models.CandidatesModel;
 import com.example.e_voting.Models.VotesModel;
 import com.example.e_voting.R;
@@ -105,7 +109,13 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Vi
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Toast.makeText(context, "Vote saved successfully.", Toast.LENGTH_SHORT).show();
+                                            FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
+                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                            FaceDetectionFragment newFragment = new FaceDetectionFragment();
+                                            fragmentTransaction.replace(R.id.frame_layout, newFragment);
+                                            fragmentTransaction.addToBackStack(null);
+                                            fragmentTransaction.commit();
+                                            Toast.makeText(context, "verify face for a successful vote.", Toast.LENGTH_SHORT).show();
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {

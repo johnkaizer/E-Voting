@@ -1,5 +1,6 @@
 package com.example.e_voting.Admin;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,13 +15,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.e_voting.Adapters.PollsAdapter;
 import com.example.e_voting.Adapters.VoterAdapter;
+import com.example.e_voting.Models.Polls;
 import com.example.e_voting.Models.VotersModel;
 import com.example.e_voting.R;
 import com.example.e_voting.databinding.FragmentHomeVBinding;
 import com.example.e_voting.databinding.FragmentVotesManagementBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -88,8 +94,75 @@ public class VotesManagementFragment extends Fragment {
                 Log.e("VotesManagementFragment", "Failed to retrieve voters: " + error.getMessage());
             }
         });
+        // Set long-press listener for item deletion
+        voterAdapter.setOnItemLongClickListener(new VoterAdapter.OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(int position) {
+                // Show a confirmation dialog
+                showConfirmationDialog(position);
+
+            }
+        });
 
         return root;
+    }
+
+    private void showConfirmationDialog(final int position) {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext());
+        builder.setTitle("Delete Voter");
+        builder.setMessage("Are you sure you want to delete this Voter?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                VotersModel votersModel = voterList.get(position);
+                String voterId = votersModel.getIdNumber();
+
+                // Get a reference to the "Voter" node in the database
+                DatabaseReference voterRef = FirebaseDatabase.getInstance().getReference().child("Voters");
+
+                // Remove the Voter from the "Voters" node
+                voterRef.child(voterId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Get a reference to the "Voter" node in the database
+                        DatabaseReference voterRef = FirebaseDatabase.getInstance().getReference().child("Voters");
+
+                        // Remove the voterRef node from the category in "voters"
+                        voterRef.child(voterId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                // Delete the voter from the list
+                                voterList.remove(position);
+
+                                // Notify the adapter about the removal
+                                voterAdapter.notifyItemRemoved(position);
+
+                                Toast.makeText(getContext(), "Voter deleted successfully.", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(), "Failed to delete voter from Voters.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Failed to delete voter from Voters.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
     }
 }
 

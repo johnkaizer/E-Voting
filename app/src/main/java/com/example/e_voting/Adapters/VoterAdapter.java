@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.e_voting.Models.VoterEducation;
@@ -29,6 +30,15 @@ public class VoterAdapter extends RecyclerView.Adapter<VoterAdapter.ViewHolder> 
         this.list = list;
         notifyDataSetChanged();
     }
+    public interface OnItemLongClickListener {
+        void onItemLongClick(int position);
+    }
+
+    private VoterAdapter.OnItemLongClickListener onItemLongClickListener;
+
+    public void setOnItemLongClickListener(VoterAdapter.OnItemLongClickListener listener) {
+        this.onItemLongClickListener = listener;
+    }
 
     @NonNull
     @Override
@@ -43,6 +53,17 @@ public class VoterAdapter extends RecyclerView.Adapter<VoterAdapter.ViewHolder> 
         holder.lastTxt.setText(votersModel.getsName());
         holder.idText.setText(votersModel.getIdNumber());
         holder.genderTxt.setText(votersModel.getGender());
+        // Set long press listener for the card view
+        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (onItemLongClickListener != null) {
+                    onItemLongClickListener.onItemLongClick(holder.getAdapterPosition());
+                }
+                return true;
+            }
+        });
+
     }
 
     @Override
@@ -55,6 +76,7 @@ public class VoterAdapter extends RecyclerView.Adapter<VoterAdapter.ViewHolder> 
         TextView genderTxt;
         TextView idText;
         TextView lastTxt;
+        CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,6 +84,7 @@ public class VoterAdapter extends RecyclerView.Adapter<VoterAdapter.ViewHolder> 
             lastTxt = itemView.findViewById(R.id.email);
             idText = itemView.findViewById(R.id.password);
             genderTxt = itemView.findViewById(R.id.phone);
+            cardView = itemView.findViewById(R.id.cardView);
         }
     }
 }

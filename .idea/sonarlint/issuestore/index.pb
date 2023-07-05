@@ -3,8 +3,6 @@ n
 >app/src/main/java/com/example/e_voting/Models/VotersModel.java,a\4\a4a5e505bdfa388a0180b54346457d6303e9c69d
 o
 ?app/src/main/java/com/example/e_voting/Auth/SignUpActivity.java,e\7\e7c8375db572532593570e71f6a05d0e03be24f5
-P
- app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 p
 @app/src/main/java/com/example/e_voting/Models/CategoryModel.java,b\6\b63f03cf6ea97e7e753ae3a9c875e6013a49e135
 q
@@ -17,8 +15,6 @@ o
 ?app/src/main/java/com/example/e_voting/Auth/SignInActivity.java,c\a\ca53d89770f69119c8c72ef256206daa395c6ee7
 z
 Japp/src/main/java/com/example/e_voting/Adapters/VoterEducationAdapter.java,5\7\57b5e79c3a0d6a825cf02f518b88e11d4ee2fb27
-<
-build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 p
 @app/src/main/java/com/example/e_voting/SplashScreenActivity.java,2\1\214af48041d83486188f9d7a0feeb2cf7e92f9ff
 h
@@ -27,3 +23,13 @@ g
 7app/src/main/java/com/example/e_voting/Models/User.java,6\7\67b7d75138585e8fa773a4b938df2d4ba9763028
 o
 ?app/src/main/java/com/example/e_voting/Admin/AdminActivity.java,3\5\3547c514ccdb03b592c6fdd2568a0b786b7b0530
+<
+build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
+n
+>app/src/main/java/com/example/e_voting/Admin/HomeFragment.java,6\6\66768671c6e358e9ac0bbc9f41c5bc72e197429c
+n
+>app/src/main/java/com/example/e_voting/VotesCountFragment.java,1\3\13fffec253c1b4d41751e9cd3c28bfc92a084fc2
+h
+8app/src/main/java/com/example/e_voting/Models/Polls.java,d\5\d5f30face350a69d9ff83c28e1293883f03e4812
+?
+settings.gradle,0\5\05efc8b1657769a27696d478ded1e95f38737233

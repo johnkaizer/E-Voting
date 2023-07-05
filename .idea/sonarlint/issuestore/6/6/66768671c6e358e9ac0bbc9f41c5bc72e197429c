@@ -1,0 +1,12 @@
+
+C
+java:S1604:"(Make this anonymous inner class a lambda(´è£Òøÿÿÿÿ
+>
+java:S1604J"(Make this anonymous inner class a lambda(™‘¿Ç
+>
+java:S1604V"(Make this anonymous inner class a lambda(·´À
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(›È¢Á
+k
+java:S1450 "VRemove the "binding" field and declare it as a local variable in the relevant methods.(Æ¯§:
+{
+java:S1450$"`Remove the "databaseReference" field and declare it as a local variable in the relevant methods.(Ï¨Î·ùÿÿÿÿ
