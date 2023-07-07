@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,9 +31,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class AddCandidateFragment extends Fragment {
@@ -43,15 +46,11 @@ public class AddCandidateFragment extends Fragment {
     AppCompatButton submitBtn, uploadImageBtn;
     public static final int REQUEST_CODE_IMAGE = 101;
     Uri imageUri;
-    Uri partyLogoUri;
-
     boolean isImageAdded = false;
     EVotingDB eVotingDB;
     StorageReference storageRef;
     DatabaseReference dataRef;
-
-    // Declare clickedImageView as an ImageView
-    ImageView clickedImageView;
+    ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,6 +65,8 @@ public class AddCandidateFragment extends Fragment {
         submitBtn = root.findViewById(R.id.submit_btn);
         uploadImageBtn = root.findViewById(R.id.image_btn);
         cat = root.findViewById(R.id.category_spinner);
+        progressBar = root.findViewById(R.id.progressbar1);
+        progressBar.setVisibility(View.GONE);
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cat.setAdapter(spinnerAdapter);
@@ -78,8 +79,6 @@ public class AddCandidateFragment extends Fragment {
         uploadImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Set clickedImageView to imageV
-                clickedImageView = imageV;
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -94,25 +93,8 @@ public class AddCandidateFragment extends Fragment {
                 String party = partyET.getText().toString();
                 String category = cat.getSelectedItem().toString();
 
-                if (isImageAdded && !fullName.isEmpty() && !party.isEmpty()) {
-                    // Generate a unique ID for the candidate
-                    String candidateId = dataRef.push().getKey();
-
-                    // Upload the image to Firebase Storage
-                    uploadImage(candidateId);
-
-                    // Create a new CandidatesModel object with the candidate details
-                    CandidatesModel candidate = new CandidatesModel();
-                    candidate.setImage(candidateId);
-                    candidate.setFullName(fullName);
-                    candidate.setParty(party);
-                    candidate.setCategory(category);
-
-                    // Save the candidate to Firebase Realtime Database
-                    saveCandidate(candidate);
-
-                    // Reset the form
-                    resetForm();
+                if (isImageAdded && fullName != null && party != null && category != null) {
+                    saveCandidate(fullName, party, category);
                 } else {
                     Toast.makeText(getContext(), "Please fill all fields and add an image", Toast.LENGTH_SHORT).show();
                 }
@@ -122,47 +104,48 @@ public class AddCandidateFragment extends Fragment {
         return root;
     }
 
-    private void uploadImage(String candidateId) {
-        if (imageUri != null) {
-            // Upload candidate image
-            StorageReference candidateImageRef = storageRef.child(candidateId);
-            candidateImageRef.putFile(imageUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            // Candidate image upload success
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            // Candidate image upload failed
-                        }
-                    });
-        }
-    }
+    private void saveCandidate(String fullName, String party, String category) {
+        progressBar.setVisibility(View.VISIBLE);
 
-
-    private void saveCandidate(CandidatesModel candidate) {
-        String category = candidate.getCategory();
-        DatabaseReference categoryRef = dataRef.child(category);
-
-        String candidateId = categoryRef.push().getKey();
-        candidate.setImage(candidateId);
-
-        categoryRef.child(candidateId).setValue(candidate)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+        final String candidateId = dataRef.child(category).push().getKey();
+        StorageReference imageRef = storageRef.child(category).child(candidateId + ".jpg");
+        imageRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(getContext(), "Candidate saved successfully", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getContext(), "Failed to save candidate", Toast.LENGTH_SHORT).show();
+                    public void onSuccess(Uri uri) {
+                        String imageUrl = uri.toString();
+
+                        CandidatesModel candidate = new CandidatesModel(imageUrl, fullName, party, category);
+
+                        dataRef.child(category).child(candidateId).setValue(candidate).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(getContext(), "Candidate saved successfully", Toast.LENGTH_SHORT).show();
+                                resetForm();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(), "Failed to save candidate", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Failed to upload candidate image", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+                progressBar.setProgress((int) progress);
+            }
+        });
     }
 
 
@@ -180,9 +163,7 @@ public class AddCandidateFragment extends Fragment {
             imageUri = data.getData();
             isImageAdded = true;
             imageV.setImageURI(imageUri);
-
         }
-
     }
 }
 

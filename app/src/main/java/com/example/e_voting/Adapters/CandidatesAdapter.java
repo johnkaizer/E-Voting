@@ -68,7 +68,11 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Vi
         holder.nameText.setText(model.getFullName());
         holder.partyName.setText(model.getParty());
         holder.category.setText(model.getCategory());
-        Picasso.get().load(model.getImage()).into(holder.picture);
+        String imageUrl = model.getImageUrl();
+        // Load the image using Picasso
+        Picasso.get().load(imageUrl).into(holder.picture);
+
+
         // Set long press listener for the card view
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -99,7 +103,7 @@ public class CandidatesAdapter extends RecyclerView.Adapter<CandidatesAdapter.Vi
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
                             // User has already voted for this candidate
-                            Toast.makeText(context, "You have already voted for this candidate.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "You have already voted or failed to authenticate face contact admin.", Toast.LENGTH_SHORT).show();
                         } else {
                             // User has not voted for this candidate, save the vote
                             VotesModel vote = new VotesModel(candidateName, category, model.getParty(), userUid);

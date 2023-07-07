@@ -89,7 +89,7 @@ public class CandidatesFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 CandidatesModel candidate = candidatesModels.get(position);
-                String candidateId = candidate.getImage();
+                String candidateId = candidate.getImageUrl();
 
                 // Get a reference to the "Candidates" node in the database
                 DatabaseReference candidatesRef = FirebaseDatabase.getInstance().getReference().child("Candidates");

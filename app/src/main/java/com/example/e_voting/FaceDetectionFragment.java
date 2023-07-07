@@ -115,6 +115,8 @@ public class FaceDetectionFragment extends Fragment {
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(getContext(), "Error: " + e.getMessage(),
                                 Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Voter verification failed", Toast.LENGTH_SHORT).show();
+
                     }
                 });
     }
@@ -136,7 +138,7 @@ public class FaceDetectionFragment extends Fragment {
                 alertDialog.dismiss();
 
                 // Perform UI-related tasks
-                Toast.makeText(getContext(), "Voter verified successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Voter verification successfully", Toast.LENGTH_SHORT).show();
 
                 // Finish the fragment
                 requireActivity().getSupportFragmentManager().beginTransaction()

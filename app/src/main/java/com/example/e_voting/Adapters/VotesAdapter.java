@@ -39,38 +39,10 @@ public class VotesAdapter extends RecyclerView.Adapter<VotesAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull VotesAdapter.ViewHolder holder, int position) {
         VotesModel votesModel = list.get(position);
-        holder.nameTxt.setText(votesModel.getName());
-        holder.party.setText(votesModel.getParty());
-        holder.category.setText(votesModel.getCategory());
+        holder.nameTxt.setText(votesModel.getCategory());
+        holder.category.setText(votesModel.getName());
 
-        String category = votesModel.getCategory();
-        String name = votesModel.getName();
-
-        if (category != null && name != null) {
-            DatabaseReference votesRef = FirebaseDatabase.getInstance().getReference().child("Votes");
-            DatabaseReference categoryRef = votesRef.child(category).child(name);
-            categoryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        int totalVotes = (int) snapshot.getChildrenCount();
-                        holder.votesTxt.setText(String.valueOf(totalVotes));
-                    } else {
-                        holder.votesTxt.setText("0");
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    holder.votesTxt.setText("Error");
-                }
-            });
-        } else {
-            holder.votesTxt.setText("Invalid candidate data");
-        }
     }
-
-
 
     @Override
     public int getItemCount() {
@@ -81,14 +53,11 @@ public class VotesAdapter extends RecyclerView.Adapter<VotesAdapter.ViewHolder> 
         TextView nameTxt;
         TextView category;
         TextView party;
-        TextView votesTxt;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTxt = itemView.findViewById(R.id.textView7);
             category = itemView.findViewById(R.id.category);
             party = itemView.findViewById(R.id.textView8);
-            votesTxt = itemView.findViewById(R.id.textView9);
         }
     }
 }

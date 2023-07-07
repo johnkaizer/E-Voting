@@ -1,7 +1,7 @@
 package com.example.e_voting.Models;
 
 public class CandidatesModel {
-    String image;
+    String ImageUrl;
     String fullName;
     String party;
     String Category;
@@ -9,19 +9,19 @@ public class CandidatesModel {
     public CandidatesModel() {
     }
 
-    public CandidatesModel(String image, String fullName, String party, String category) {
-        this.image = image;
+    public CandidatesModel(String imageUrl, String fullName, String party, String category) {
+        ImageUrl = imageUrl;
         this.fullName = fullName;
         this.party = party;
         Category = category;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageUrl() {
+        return ImageUrl;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        ImageUrl = imageUrl;
     }
 
     public String getFullName() {
@@ -39,7 +39,6 @@ public class CandidatesModel {
     public void setParty(String party) {
         this.party = party;
     }
-
 
     public String getCategory() {
         return Category;
